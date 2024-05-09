@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Api Request</title>
+</head>
+<body style="background-color: #212121; color: aliceblue;">
+    <!-- 0	UNSENT	Client has been created. open() not called yet.
+1	OPENED	open() has been called.
+2	HEADERS_RECEIVED	send() has been called, and headers and status are available.
+3	LOADING	Downloading; responseText holds partial data.
+4	DONE	The operation is complete. -->
+</body>
+<script>
+    let data;
+    let img;
+
+    const requestUrl = 'https://api.github.com/users/hiteshchoudhary'
+
+    // api to request data 
+    const xhr = new XMLHttpRequest()
+    xhr.open('GET',requestUrl)
+    xhr.onreadystatechange = function() {
+        console.log(xhr.readyState)
+        if(xhr.readyState === 4){
+            // JSON.parse is used to convert anything into object because when we fetch api it comes as a string so to convert that string we use JSON.parse to get the data
+            console.log(this.responseText)
+            data = JSON.parse(this.responseText)
+            img = (data.avatar_url)
+            
+            console.log(img)
+            // console.log(data.followers)
+        }
+    }
+    xhr.send()
+
+    // button
+    const body = document.querySelector('body')
+    const button = document.createElement('button')
+    body.appendChild(button)
+    button.innerHTML = 'Click Here to Get Hitesh Profile'
+    button.style.backgroundColor = 'green'
+    button.style.color = 'White'
+    button.style.padding = '15px 30px'
+    button.style.border = 'none'
+    button.style.fontSize = '30px'
+    button.style.borderRadius = '5px'
+    
+    button.addEventListener('click',()=>{
+
+    // card
+    const card =  document.createElement('card')
+    card.style.backgroundColor = '#CEDEF8'
+    card.style.color = 'red'
+    card.innerHTML = `your followers ${data.followers}`
+    console.log(card)
+    body.appendChild(card)
+    
+    })
+
+</script>
+</html>
